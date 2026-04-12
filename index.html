@@ -573,10 +573,12 @@ a:hover { text-decoration: underline; }
       <option value="pending">Pending</option>
     </select>
     <select onchange="filterGuests()" id="guest-filter-side">
-      <option value="">All Sides</option>
-      <option value="bride">Bride's Side</option>
-      <option value="groom">Groom's Side</option>
-      <option value="mutual">Mutual</option>
+      <option value="">All Relations</option>
+      <option value="family-kw">Family — KW</option>
+      <option value="family-mr">Family — MR</option>
+      <option value="friends">Friends</option>
+      <option value="work-mr">Work — MR</option>
+      <option value="work-kw">Work — KW</option>
     </select>
     <select onchange="filterGuests()" id="guest-filter-location">
       <option value="">In-Town & Out-of-Town</option>
@@ -792,7 +794,7 @@ a:hover { text-decoration: underline; }
 
 <!-- Guest Modal -->
 <div class="modal-overlay" id="guest-modal">
-  <div class="modal" style="max-width:640px;">
+  <div class="modal" style="max-width:660px;">
     <div class="modal-header">
       <h2 class="modal-title" id="guest-modal-title">Add Guest</h2>
       <button class="modal-close" onclick="closeModal('guest-modal')">✕</button>
@@ -814,10 +816,22 @@ a:hover { text-decoration: underline; }
         <div class="form-group" id="g-indiv-first"><label>First Name *</label><input id="g-first" placeholder="Jane"></div>
         <div class="form-group" id="g-indiv-last"><label>Last Name *</label><input id="g-last" placeholder="Smith"></div>
 
-        <!-- Couple name fields (hidden by default) -->
-        <div class="form-group" id="g-couple-p1first" style="display:none"><label>Partner 1 First Name *</label><input id="g-p1first" placeholder="Jane"></div>
+        <!-- Couple name + attending checkboxes (hidden by default) -->
+        <div class="form-group" id="g-couple-p1first" style="display:none">
+          <label>Partner 1 First Name *</label>
+          <input id="g-p1first" placeholder="Jane">
+          <label style="display:flex;align-items:center;gap:0.4rem;margin-top:0.5rem;font-size:0.75rem;text-transform:none;letter-spacing:0;font-weight:400;color:var(--mid);cursor:pointer;">
+            <input type="checkbox" id="g-p1attending" style="width:auto;margin:0;accent-color:var(--deep-sage)"> Attending wedding
+          </label>
+        </div>
         <div class="form-group" id="g-couple-p1last" style="display:none"><label>Partner 1 Last Name *</label><input id="g-p1last" placeholder="Smith"></div>
-        <div class="form-group" id="g-couple-p2first" style="display:none"><label>Partner 2 First Name *</label><input id="g-p2first" placeholder="John"></div>
+        <div class="form-group" id="g-couple-p2first" style="display:none">
+          <label>Partner 2 First Name *</label>
+          <input id="g-p2first" placeholder="John">
+          <label style="display:flex;align-items:center;gap:0.4rem;margin-top:0.5rem;font-size:0.75rem;text-transform:none;letter-spacing:0;font-weight:400;color:var(--mid);cursor:pointer;">
+            <input type="checkbox" id="g-p2attending" style="width:auto;margin:0;accent-color:var(--deep-sage)"> Attending wedding
+          </label>
+        </div>
         <div class="form-group" id="g-couple-p2last" style="display:none"><label>Partner 2 Last Name</label><input id="g-p2last" placeholder="Smith (if different)"></div>
 
         <!-- ── Address ── -->
@@ -826,16 +840,24 @@ a:hover { text-decoration: underline; }
         <div class="form-group"><label>State</label><input id="g-state" placeholder="MN" maxlength="2" style="text-transform:uppercase"></div>
         <div class="form-group"><label>ZIP Code</label><input id="g-zip" placeholder="55401" maxlength="10"></div>
 
-        <!-- ── Contact ── -->
-        <div class="form-group"><label>Email</label><input id="g-email" type="email" placeholder="jane@email.com"></div>
-        <div class="form-group"><label>Phone</label><input id="g-phone" placeholder="(555) 555-5555"></div>
+        <!-- ── Contact — Individual ── -->
+        <div class="form-group" id="g-email-indiv-grp"><label>Email</label><input id="g-email" type="email" placeholder="jane@email.com"></div>
+        <div class="form-group" id="g-phone-indiv-grp"><label>Phone</label><input id="g-phone" placeholder="(555) 555-5555"></div>
+
+        <!-- ── Contact — Couple (hidden by default) ── -->
+        <div class="form-group" id="g-email-p1-grp" style="display:none"><label>Partner 1 Email</label><input id="g-email-p1" type="email" placeholder="jane@email.com"></div>
+        <div class="form-group" id="g-phone-p1-grp" style="display:none"><label>Partner 1 Phone</label><input id="g-phone-p1" placeholder="(555) 555-5555"></div>
+        <div class="form-group" id="g-email-p2-grp" style="display:none"><label>Partner 2 Email</label><input id="g-email-p2" type="email" placeholder="john@email.com"></div>
+        <div class="form-group" id="g-phone-p2-grp" style="display:none"><label>Partner 2 Phone</label><input id="g-phone-p2" placeholder="(555) 555-5555"></div>
 
         <!-- ── Classification ── -->
-        <div class="form-group"><label>Side</label>
+        <div class="form-group"><label>Relation</label>
           <select id="g-side">
-            <option value="bride">Bride's Side</option>
-            <option value="groom">Groom's Side</option>
-            <option value="mutual">Mutual</option>
+            <option value="family-kw">Family — KW</option>
+            <option value="family-mr">Family — MR</option>
+            <option value="friends">Friends</option>
+            <option value="work-mr">Work — MR</option>
+            <option value="work-kw">Work — KW</option>
           </select>
         </div>
         <div class="form-group"><label>Location</label>
@@ -858,7 +880,7 @@ a:hover { text-decoration: underline; }
           <input id="g-table" placeholder="e.g. 5" type="number" min="1">
         </div>
 
-        <!-- ── Meal(s) — individual shows one, couple shows two ── -->
+        <!-- ── Meal(s) ── -->
         <div class="form-group" id="g-meal-indiv-grp"><label>Meal Preference</label>
           <select id="g-meal">
             <option value="">Unknown</option>
@@ -1271,6 +1293,13 @@ function toggleGuestType() {
   // +1 only for individuals
   document.getElementById('g-plus1-grp').style.display          = isCouple ? 'none' : '';
   document.getElementById('g-plus1-name-grp').style.display     = isCouple ? 'none' : '';
+  // Contact — swap single vs dual email/phone
+  document.getElementById('g-email-indiv-grp').style.display    = isCouple ? 'none' : '';
+  document.getElementById('g-phone-indiv-grp').style.display    = isCouple ? 'none' : '';
+  document.getElementById('g-email-p1-grp').style.display       = isCouple ? '' : 'none';
+  document.getElementById('g-phone-p1-grp').style.display       = isCouple ? '' : 'none';
+  document.getElementById('g-email-p2-grp').style.display       = isCouple ? '' : 'none';
+  document.getElementById('g-phone-p2-grp').style.display       = isCouple ? '' : 'none';
 }
 
 function toggleRehearsalRSVP() {
@@ -1338,16 +1367,31 @@ function renderGuests() {
   tbody.innerHTML = guests.map(g => {
     const rsvpBadge  = g.rsvp === 'attending' ? 'badge-green' : g.rsvp === 'not-attending' ? 'badge-red' : 'badge-muted';
     const rsvpLabel  = g.rsvp === 'attending' ? 'Attending' : g.rsvp === 'not-attending' ? 'Declined' : 'Pending';
-    const sideBadge  = g.side === 'bride' ? 'badge-blue' : g.side === 'groom' ? 'badge-sage' : 'badge-muted';
+    const relationLabels = { 'family-kw':'Family — KW','family-mr':'Family — MR','friends':'Friends','work-mr':'Work — MR','work-kw':'Work — KW' };
+    const sideBadge  = g.side && g.side.startsWith('family') ? 'badge-blue' : g.side && g.side.startsWith('work') ? 'badge-gold' : g.side === 'friends' ? 'badge-sage' : 'badge-muted';
     const locBadge   = g.location === 'in-town' ? 'badge-sage' : g.location === 'out-of-town' ? 'badge-gold' : 'badge-muted';
     const locLabel   = g.location === 'in-town' ? 'In-Town' : g.location === 'out-of-town' ? 'Out-of-Town' : '—';
-    const typeBadge  = g.type === 'couple' ? `<span class="badge badge-muted" style="font-size:0.6rem;">Couple</span> ` : '';
+
+    // Name cell — for couples show per-partner attending indicator
+    let nameCell;
+    if (g.type === 'couple') {
+      const p1check = g.p1attending ? '✓' : '–';
+      const p2check = g.p2attending ? '✓' : '–';
+      const p1style = g.p1attending ? 'color:var(--deep-sage);font-weight:600' : 'color:var(--muted)';
+      const p2style = g.p2attending ? 'color:var(--deep-sage);font-weight:600' : 'color:var(--muted)';
+      const p2last = g.p2lastName && g.p2lastName !== g.p1lastName ? ' ' + g.p2lastName : '';
+      nameCell = `<span class="badge badge-muted" style="font-size:0.6rem;margin-bottom:0.2rem">Couple</span><br>
+        <span style="${p1style}"><span style="font-size:0.75rem">${p1check}</span> ${g.p1firstName} ${g.p1lastName}</span><br>
+        <span style="${p2style}"><span style="font-size:0.75rem">${p2check}</span> ${g.p2firstName}${p2last}</span>`;
+    } else {
+      nameCell = `<strong>${g.firstName} ${g.lastName}</strong>`;
+    }
 
     // Meal display
     let mealCell = '—';
     if (g.type === 'couple') {
-      const meals = [g.mealP1, g.mealP2].filter(Boolean);
-      mealCell = meals.length ? meals.join(' / ') : '—';
+      const meals = [g.mealP1 && `${g.p1firstName}: ${g.mealP1}`, g.mealP2 && `${g.p2firstName}: ${g.mealP2}`].filter(Boolean);
+      mealCell = meals.length ? meals.join('<br>') : '—';
     } else {
       mealCell = g.meal || '—';
     }
@@ -1361,10 +1405,12 @@ function renderGuests() {
     }
 
     return `<tr>
-      <td><strong>${typeBadge}${guestDisplayName(g)}</strong>${g.notes ? `<br><small style="color:var(--muted)">${g.notes}</small>` : ''}</td>
+      <td>${nameCell}${g.notes ? `<br><small style="color:var(--muted)">${g.notes}</small>` : ''}</td>
       <td style="font-size:0.79rem;color:var(--mid);white-space:nowrap">${guestAddress(g)}</td>
-      <td>${g.email ? `<a href="mailto:${g.email}">${g.email}</a>` : '—'}</td>
-      <td><span class="badge ${sideBadge}">${g.side || '—'}</span></td>
+      <td style="font-size:0.79rem">${g.type === 'couple'
+        ? [g.emailP1 && `<a href="mailto:${g.emailP1}">${g.emailP1}</a>`, g.emailP2 && `<a href="mailto:${g.emailP2}">${g.emailP2}</a>`].filter(Boolean).join('<br>') || '—'
+        : g.email ? `<a href="mailto:${g.email}">${g.email}</a>` : '—'}</td>
+      <td><span class="badge ${sideBadge}">${relationLabels[g.side] || g.side || '—'}</span></td>
       <td><span class="badge ${locBadge}">${locLabel}</span></td>
       <td><span class="badge ${rsvpBadge}">${rsvpLabel}</span></td>
       <td style="font-size:0.82rem">${mealCell}</td>
@@ -1382,21 +1428,24 @@ function filterGuests(v) { renderGuests(); }
 
 function clearGuestForm() {
   ['guest-id','g-first','g-last','g-p1first','g-p1last','g-p2first','g-p2last',
-   'g-street','g-city','g-state','g-zip','g-email','g-phone',
+   'g-street','g-city','g-state','g-zip',
+   'g-email','g-phone','g-email-p1','g-phone-p1','g-email-p2','g-phone-p2',
    'g-table','g-plus1-name','g-notes'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
-  document.getElementById('g-type').value             = 'individual';
-  document.getElementById('g-side').value             = 'bride';
-  document.getElementById('g-location').value         = 'unknown';
-  document.getElementById('g-rsvp').value             = 'pending';
-  document.getElementById('g-meal').value             = '';
-  document.getElementById('g-meal-p1').value          = '';
-  document.getElementById('g-meal-p2').value          = '';
-  document.getElementById('g-plus1').value            = 'no';
-  document.getElementById('g-rehearsal-invited').value = 'no';
-  document.getElementById('g-rehearsal-rsvp').value   = 'pending';
+  document.getElementById('g-p1attending').checked        = false;
+  document.getElementById('g-p2attending').checked        = false;
+  document.getElementById('g-type').value                 = 'individual';
+  document.getElementById('g-side').value                 = 'family-kw';
+  document.getElementById('g-location').value             = 'unknown';
+  document.getElementById('g-rsvp').value                 = 'pending';
+  document.getElementById('g-meal').value                 = '';
+  document.getElementById('g-meal-p1').value              = '';
+  document.getElementById('g-meal-p2').value              = '';
+  document.getElementById('g-plus1').value                = 'no';
+  document.getElementById('g-rehearsal-invited').value    = 'no';
+  document.getElementById('g-rehearsal-rsvp').value       = 'pending';
   document.getElementById('guest-modal-title').textContent = 'Add Guest';
   toggleGuestType();
   toggleRehearsalRSVP();
@@ -1417,16 +1466,23 @@ function editGuest(id) {
   document.getElementById('g-p1last').value             = g.p1lastName  || '';
   document.getElementById('g-p2first').value            = g.p2firstName || '';
   document.getElementById('g-p2last').value             = g.p2lastName  || '';
+  document.getElementById('g-p1attending').checked      = !!g.p1attending;
+  document.getElementById('g-p2attending').checked      = !!g.p2attending;
   // Address
   document.getElementById('g-street').value             = g.street || '';
   document.getElementById('g-city').value               = g.city   || '';
   document.getElementById('g-state').value              = g.state  || '';
   document.getElementById('g-zip').value                = g.zip    || '';
-  // Contact
+  // Contact — individual
   document.getElementById('g-email').value              = g.email  || '';
   document.getElementById('g-phone').value              = g.phone  || '';
+  // Contact — couple
+  document.getElementById('g-email-p1').value           = g.emailP1 || '';
+  document.getElementById('g-phone-p1').value           = g.phoneP1 || '';
+  document.getElementById('g-email-p2').value           = g.emailP2 || '';
+  document.getElementById('g-phone-p2').value           = g.phoneP2 || '';
   // Classification
-  document.getElementById('g-side').value              = g.side     || 'bride';
+  document.getElementById('g-side').value              = g.side     || 'family-kw';
   document.getElementById('g-location').value          = g.location || 'unknown';
   // Wedding
   document.getElementById('g-rsvp').value              = g.rsvp    || 'pending';
@@ -1474,14 +1530,21 @@ async function saveGuest() {
     p1lastName:  document.getElementById('g-p1last').value.trim(),
     p2firstName: document.getElementById('g-p2first').value.trim(),
     p2lastName:  document.getElementById('g-p2last').value.trim(),
+    p1attending: document.getElementById('g-p1attending').checked,
+    p2attending: document.getElementById('g-p2attending').checked,
     // Address
     street:      document.getElementById('g-street').value.trim(),
     city:        document.getElementById('g-city').value.trim(),
     state:       document.getElementById('g-state').value.trim().toUpperCase(),
     zip:         document.getElementById('g-zip').value.trim(),
-    // Contact
+    // Contact — individual
     email:       document.getElementById('g-email').value.trim(),
     phone:       document.getElementById('g-phone').value.trim(),
+    // Contact — couple
+    emailP1:     document.getElementById('g-email-p1').value.trim(),
+    phoneP1:     document.getElementById('g-phone-p1').value.trim(),
+    emailP2:     document.getElementById('g-email-p2').value.trim(),
+    phoneP2:     document.getElementById('g-phone-p2').value.trim(),
     // Classification
     side:        document.getElementById('g-side').value,
     location:    document.getElementById('g-location').value,
