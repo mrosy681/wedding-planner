@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Wedding — July 24, 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf7f2;
+  --warm-white: #f5f0e8;
+  --blush: #e8c4b8;
+  --dusty-rose: #c9897a;
+  --deep-rose: #8a4a3a;
+  --sage: #8fa48f;
+  --deep-sage: #4a6b4d;
+  --gold: #c4a05e;
+  --dark-gold: #8a6c30;
+  --ink: #2a2320;
+  --mid: #6b5c52;
+  --muted: #a89890;
+  --border: #e2d8ce;
+  --card: #ffffff;
+  --shadow: 0 2px 12px rgba(44,38,32,0.07);
+  --shadow-lg: 0 8px 32px rgba(44,38,32,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; font-size: 15px; }
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: var(--cream);
+  text-align: center;
+  padding: 3rem 1.5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 60%, rgba(196,160,94,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 40%, rgba(232,196,184,0.12) 0%, transparent 55%);
+  pointer-events: none;
+}
+header::after {
+  content: '✦';
+  position: absolute;
+  font-size: 8rem;
+  color: rgba(196,160,94,0.06);
+  top: -1rem; right: 3rem;
+  pointer-events: none;
+}
+.header-inner { position: relative; z-index: 1; }
+.eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 7vw, 4.2rem);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+}
+header h1 em { font-style: italic; color: var(--blush); }
+.wedding-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  letter-spacing: 0.1em;
+}
+.countdown {
+  display: inline-flex;
+  gap: 0;
+  margin-top: 2rem;
+  border: 1px solid rgba(196,160,94,0.3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.cd-unit {
+  padding: 0.75rem 1.25rem;
+  text-align: center;
+  border-right: 1px solid rgba(196,160,94,0.2);
+}
+.cd-unit:last-child { border-right: none; }
+.cd-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+}
+.cd-label {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  display: block;
+}
+
+/* ── NAV ── */
+nav {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex: none;
+  padding: 1rem 1.4rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav-btn:hover { color: var(--ink); }
+.nav-btn.active { color: var(--deep-rose); border-bottom-color: var(--deep-rose); }
+.nav-icon { margin-right: 0.4rem; }
+
+/* ── MAIN LAYOUT ── */
+main { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.section { display: none; animation: fadeIn 0.3s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+.section-title small {
+  display: block;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+.section-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  color: var(--mid);
+}
+.stat-pill strong { color: var(--ink); }
+
+/* ── BUTTON ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--ink); color: var(--cream); }
+.btn-primary:hover { background: var(--deep-rose); }
+.btn-secondary { background: var(--warm-white); color: var(--ink); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--blush); border-color: var(--blush); }
+.btn-ghost { background: none; color: var(--muted); padding: 0.4rem 0.6rem; }
+.btn-ghost:hover { color: var(--deep-rose); }
+.btn-danger { background: none; color: #c0392b; padding: 0.4rem 0.6rem; font-size: 0.85rem; }
+.btn-danger:hover { background: #fde8e6; border-radius: 3px; }
+.btn-sm { padding: 0.4rem 0.9rem; font-size: 0.68rem; }
+.btn-sage { background: var(--sage); color: white; }
+.btn-sage:hover { background: var(--deep-sage); }
+
+/* ── CARD ── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  background: var(--warm-white);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--warm-white); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(42,35,32,0.55);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--card);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: var(--shadow-lg);
+  animation: modalIn 0.25s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(0.96) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-header {
+  padding: 1.5rem 1.75rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.modal-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 1.3rem; color: var(--muted);
+  line-height: 1; padding: 0.2rem 0.4rem;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--ink); }
+.modal-body { padding: 1.5rem 1.75rem; }
+.modal-footer {
+  padding: 1rem 1.75rem 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border);
+}
+
+/* ── FORM ── */
+.form-grid { display: grid; gap: 1rem; }
+.form-grid-2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 520px) { .form-grid-2 { grid-template-columns: 1fr; } }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group.full { grid-column: 1 / -1; }
+label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+input, select, textarea {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: var(--cream);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(196,160,94,0.12);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+/* ── BADGES ── */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.badge-green { background: #e6f4ea; color: #2e7d32; }
+.badge-red { background: #fde8e6; color: #c0392b; }
+.badge-gold { background: #fef3dd; color: #8a6c30; }
+.badge-blue { background: #e3f0fb; color: #1565c0; }
+.badge-muted { background: var(--warm-white); color: var(--muted); border: 1px solid var(--border); }
+.badge-sage { background: #eaf2ea; color: var(--deep-sage); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--muted);
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.empty-state p { font-size: 0.9rem; margin-top: 0.5rem; }
+
+/* ── SEARCH / FILTER BAR ── */
+.filter-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.filter-bar input[type=search], .filter-bar select {
+  flex: 1;
+  min-width: 160px;
+  max-width: 300px;
+}
+
+/* ── EXPENSE SPECIFIC ── */
+.expense-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.summary-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+.summary-card .label {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+.summary-card .amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem;
+  font-weight: 300;
+  color: var(--ink);
+  margin-top: 0.25rem;
+}
+.summary-card .amount.gold { color: var(--gold); }
+.summary-card .amount.rose { color: var(--deep-rose); }
+
+/* ── HOTEL ── */
+.hotel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; }
+.hotel-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.hotel-card:hover { box-shadow: var(--shadow-lg); }
+.hotel-card.recommended { border-color: var(--gold); }
+.hotel-card.recommended::before {
+  content: '★ Recommended';
+  position: absolute;
+  top: -1px; right: 1rem;
+  background: var(--gold);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0 0 4px 4px;
+}
+.hotel-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+.hotel-meta { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+.hotel-rate {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--deep-sage);
+  font-weight: 300;
+}
+.hotel-rate small { font-size: 0.75rem; font-family: 'Jost', sans-serif; color: var(--muted); }
+.hotel-notes { font-size: 0.82rem; color: var(--mid); margin-top: 0.75rem; line-height: 1.5; }
+.hotel-actions { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 0.85rem 1.5rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  z-index: 9999;
+  pointer-events: none;
+  max-width: 300px;
+}
+#toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── LOADING ── */
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+.spinner {
+  display: inline-block;
+  width: 24px; height: 24px;
+  border: 2px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 0.75rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── PROGRESS BAR ── */
+.progress-bar { background: var(--border); border-radius: 100px; height: 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--sage); border-radius: 100px; transition: width 0.5s ease; }
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ── MONTH EXPENSE GROUP ── */
+.month-group { margin-bottom: 1.5rem; }
+.month-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.6rem 1rem;
+  background: var(--warm-white);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+.month-total { color: var(--ink); font-weight: 600; }
+
+/* ── RESP ── */
+@media (max-width: 680px) {
+  main { padding: 1.5rem 1rem 3rem; }
+  .section-header { flex-direction: column; align-items: flex-start; }
+  .hotel-grid { grid-template-columns: 1fr; }
+}
+
+/* ── TOOLTIP ── */
+[title] { cursor: help; }
+a { color: var(--deep-rose); text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <p class="eyebrow">Wedding Planner</p>
+    <h1>Together <em>Forever</em></h1>
+    <p class="wedding-date">July 24, 2027</p>
+    <div class="countdown" id="countdown">
+      <div class="cd-unit"><span class="cd-num" id="cd-days">—</span><span class="cd-label">Days</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-hours">—</span><span class="cd-label">Hours</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-minutes">—</span><span class="cd-label">Minutes</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-seconds">—</span><span class="cd-label">Seconds</span></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <button class="nav-btn active" onclick="showSection('guests', this)"><span class="nav-icon">💌</span>Guests</button>
+  <button class="nav-btn" onclick="showSection('vendors', this)"><span class="nav-icon">🎪</span>Vendors</button>
+  <button class="nav-btn" onclick="showSection('expenses', this)"><span class="nav-icon">💰</span>Expenses</button>
+  <button class="nav-btn" onclick="showSection('gifts', this)"><span class="nav-icon">🎁</span>Gifts</button>
+  <button class="nav-btn" onclick="showSection('hotels', this)"><span class="nav-icon">🏨</span>Hotels</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════
+     GUESTS
+══════════════════════════════════════════════ -->
+<div class="section active" id="section-guests">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 01</small>
+      Guest List
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+      <div class="section-stats" id="guest-stats"></div>
+      <button class="btn btn-primary" onclick="openModal('guest-modal')">+ Add Guest</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <input type="search" placeholder="Search guests…" oninput="filterGuests(this.value)" id="guest-search">
+    <select onchange="filterGuests()" id="guest-filter-status">
+      <option value="">All RSVP Status</option>
+      <option value="attending">Attending</option>
+      <option value="not-attending">Not Attending</option>
+      <option value="pending">Pending</option>
+    </select>
+    <select onchange="filterGuests()" id="guest-filter-side">
+      <option value="">All Sides</option>
+      <option value="bride">Bride's Side</option>
+      <option value="groom">Groom's Side</option>
+      <option value="mutual">Mutual</option>
+    </select>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Side</th>
+            <th>RSVP</th>
+            <th>Meal</th>
+            <th>+1</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="guest-tbody">
+          <tr><td colspan="8"><div class="loading"><div class="spinner"></div><br>Loading guests…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     VENDORS
+══════════════════════════════════════════════ -->
+<div class="section" id="section-vendors">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 02</small>
+      Vendors
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+      <div class="section-stats" id="vendor-stats"></div>
+      <button class="btn btn-primary" onclick="openModal('vendor-modal')">+ Add Vendor</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <input type="search" placeholder="Search vendors…" oninput="filterVendors(this.value)" id="vendor-search">
+    <select onchange="filterVendors()" id="vendor-filter-cat">
+      <option value="">All Categories</option>
+      <option>Venue</option><option>Catering</option><option>Photography</option>
+      <option>Videography</option><option>Flowers</option><option>Music / DJ</option>
+      <option>Hair & Makeup</option><option>Cake / Desserts</option><option>Transportation</option>
+      <option>Officiant</option><option>Stationery</option><option>Rentals</option><option>Other</option>
+    </select>
+    <select onchange="filterVendors()" id="vendor-filter-status">
+      <option value="">All Status</option>
+      <option value="evaluating">Evaluating</option>
+      <option value="booked">Booked</option>
+      <option value="declined">Declined</option>
+    </select>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor</th>
+            <th>Category</th>
+            <th>Contact</th>
+            <th>Website</th>
+            <th>Quote</th>
+            <th>Status</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="vendor-tbody">
+          <tr><td colspan="8"><div class="loading"><div class="spinner"></div><br>Loading vendors…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     EXPENSES
+══════════════════════════════════════════════ -->
+<div class="section" id="section-expenses">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 03</small>
+      Expenses
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+      <button class="btn btn-secondary btn-sm" onclick="openModal('category-modal')">+ Category</button>
+      <button class="btn btn-primary" onclick="openModal('expense-modal')">+ Payment</button>
+    </div>
+  </div>
+
+  <div class="expense-summary" id="expense-summary">
+    <div class="summary-card">
+      <div class="label">Total Budget</div>
+      <div class="amount gold" id="exp-budget">$0</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Total Committed</div>
+      <div class="amount" id="exp-committed">$0</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Paid to Date</div>
+      <div class="amount rose" id="exp-paid">$0</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Remaining Due</div>
+      <div class="amount" id="exp-remaining">$0</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;">
+    <select id="exp-filter-month" onchange="renderExpenses()" style="max-width:180px;">
+      <option value="">All Months</option>
+    </select>
+    <select id="exp-filter-cat" onchange="renderExpenses()" style="max-width:200px;">
+      <option value="">All Categories</option>
+    </select>
+    <select id="exp-filter-status" onchange="renderExpenses()" style="max-width:180px;">
+      <option value="">All Status</option>
+      <option value="upcoming">Upcoming</option>
+      <option value="paid">Paid</option>
+      <option value="overdue">Overdue</option>
+    </select>
+  </div>
+
+  <div id="expense-list"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     GIFTS
+══════════════════════════════════════════════ -->
+<div class="section" id="section-gifts">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 04</small>
+      Gift Tracker
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+      <div class="section-stats" id="gift-stats"></div>
+      <button class="btn btn-primary" onclick="openModal('gift-modal')">+ Add Gift</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <input type="search" placeholder="Search gifts…" oninput="filterGifts(this.value)" id="gift-search">
+    <select onchange="filterGifts()" id="gift-filter-ty">
+      <option value="">All Thank-You Status</option>
+      <option value="sent">Thank You Sent</option>
+      <option value="pending">Thank You Pending</option>
+    </select>
+  </div>
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Giver</th>
+            <th>Gift Description</th>
+            <th>Value</th>
+            <th>Date Received</th>
+            <th>Thank You</th>
+            <th>Notes</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="gift-tbody">
+          <tr><td colspan="7"><div class="loading"><div class="spinner"></div><br>Loading gifts…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     HOTELS
+══════════════════════════════════════════════ -->
+<div class="section" id="section-hotels">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 05</small>
+      Hotel Options
+    </div>
+    <button class="btn btn-primary" onclick="openModal('hotel-modal')">+ Add Hotel</button>
+  </div>
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;">Track hotels you're considering recommending to your guests. Mark your top pick as Recommended.</p>
+  <div class="hotel-grid" id="hotel-grid">
+    <div class="loading"><div class="spinner"></div><br>Loading hotels…</div>
+  </div>
+</div>
+
+</main>
+
+<!-- ══ TOAST ══ -->
+<div id="toast"></div>
+
+<!-- ══════════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════════ -->
+
+<!-- Guest Modal -->
+<div class="modal-overlay" id="guest-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="guest-modal-title">Add Guest</h2>
+      <button class="modal-close" onclick="closeModal('guest-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="guest-id">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>First Name *</label><input id="g-first" placeholder="Jane"></div>
+        <div class="form-group"><label>Last Name *</label><input id="g-last" placeholder="Smith"></div>
+        <div class="form-group full"><label>Address</label><input id="g-address" placeholder="123 Main St, City, State ZIP"></div>
+        <div class="form-group"><label>Email</label><input id="g-email" type="email" placeholder="jane@email.com"></div>
+        <div class="form-group"><label>Phone</label><input id="g-phone" placeholder="(555) 555-5555"></div>
+        <div class="form-group"><label>Side</label>
+          <select id="g-side">
+            <option value="bride">Bride's Side</option>
+            <option value="groom">Groom's Side</option>
+            <option value="mutual">Mutual</option>
+          </select>
+        </div>
+        <div class="form-group"><label>RSVP Status</label>
+          <select id="g-rsvp">
+            <option value="pending">Pending</option>
+            <option value="attending">Attending</option>
+            <option value="not-attending">Not Attending</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Meal Preference</label>
+          <select id="g-meal">
+            <option value="">Unknown</option>
+            <option value="chicken">Chicken</option>
+            <option value="beef">Beef</option>
+            <option value="fish">Fish</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+          </select>
+        </div>
+        <div class="form-group"><label>+1 Allowed?</label>
+          <select id="g-plus1">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="form-group"><label>+1 Name (if attending)</label><input id="g-plus1-name" placeholder="Guest name"></div>
+        <div class="form-group full"><label>Notes</label><textarea id="g-notes" placeholder="Dietary restrictions, accessibility needs…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('guest-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGuest()">Save Guest</button>
+    </div>
+  </div>
+</div>
+
+<!-- Vendor Modal -->
+<div class="modal-overlay" id="vendor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="vendor-modal-title">Add Vendor</h2>
+      <button class="modal-close" onclick="closeModal('vendor-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="vendor-id">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>Vendor Name *</label><input id="v-name" placeholder="Elite Photography Co."></div>
+        <div class="form-group"><label>Category *</label>
+          <select id="v-cat">
+            <option>Venue</option><option>Catering</option><option>Photography</option>
+            <option>Videography</option><option>Flowers</option><option>Music / DJ</option>
+            <option>Hair & Makeup</option><option>Cake / Desserts</option><option>Transportation</option>
+            <option>Officiant</option><option>Stationery</option><option>Rentals</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Contact Name</label><input id="v-contact" placeholder="John Doe"></div>
+        <div class="form-group"><label>Contact Email</label><input id="v-email" type="email" placeholder="vendor@email.com"></div>
+        <div class="form-group"><label>Phone</label><input id="v-phone" placeholder="(555) 555-5555"></div>
+        <div class="form-group"><label>Website</label><input id="v-web" type="url" placeholder="https://vendor.com"></div>
+        <div class="form-group"><label>Quote / Price</label><input id="v-price" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="form-group"><label>Status</label>
+          <select id="v-status">
+            <option value="evaluating">Evaluating</option>
+            <option value="booked">Booked</option>
+            <option value="declined">Declined</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Notes</label><textarea id="v-notes" placeholder="Availability, packages considered, impressions…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('vendor-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveVendor()">Save Vendor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Category Modal -->
+<div class="modal-overlay" id="category-modal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h2 class="modal-title">Manage Categories</h2>
+      <button class="modal-close" onclick="closeModal('category-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>New Category Name</label>
+          <div style="display:flex;gap:0.5rem;">
+            <input id="new-cat-name" placeholder="e.g. Honeymoon, Attire…" style="flex:1;">
+            <button class="btn btn-primary" onclick="addCategory()">Add</button>
+          </div>
+        </div>
+        <div>
+          <label style="display:block;margin-bottom:0.5rem;">Budget per Category</label>
+          <div id="category-list" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="saveCategories();closeModal('category-modal')">Save & Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Expense Modal -->
+<div class="modal-overlay" id="expense-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="expense-modal-title">Add Payment</h2>
+      <button class="modal-close" onclick="closeModal('expense-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="expense-id">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>Description *</label><input id="e-desc" placeholder="Deposit, Final payment…"></div>
+        <div class="form-group"><label>Category</label>
+          <select id="e-cat"></select>
+        </div>
+        <div class="form-group"><label>Linked Vendor</label>
+          <select id="e-vendor"><option value="">None</option></select>
+        </div>
+        <div class="form-group"><label>Amount *</label><input id="e-amount" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="form-group"><label>Due Date *</label><input id="e-due" type="date"></div>
+        <div class="form-group"><label>Status</label>
+          <select id="e-status">
+            <option value="upcoming">Upcoming</option>
+            <option value="paid">Paid</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Notes</label><textarea id="e-notes" placeholder="Payment method, confirmation #…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('expense-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveExpense()">Save Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gift Modal -->
+<div class="modal-overlay" id="gift-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="gift-modal-title">Add Gift</h2>
+      <button class="modal-close" onclick="closeModal('gift-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="gift-id">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>Giver Name *</label><input id="gi-giver" placeholder="Jane & Bob Smith"></div>
+        <div class="form-group"><label>Date Received</label><input id="gi-date" type="date"></div>
+        <div class="form-group full"><label>Gift Description *</label><input id="gi-desc" placeholder="KitchenAid stand mixer, silver frame, cash…"></div>
+        <div class="form-group"><label>Estimated Value</label><input id="gi-value" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="form-group"><label>Thank You Sent?</label>
+          <select id="gi-ty">
+            <option value="pending">Not Yet</option>
+            <option value="sent">Sent</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Date Thank You Sent</label><input id="gi-ty-date" type="date"></div>
+        <div class="form-group full"><label>Notes</label><textarea id="gi-notes" placeholder="Registry item, from shower vs. wedding…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('gift-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveGift()">Save Gift</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hotel Modal -->
+<div class="modal-overlay" id="hotel-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="hotel-modal-title">Add Hotel</h2>
+      <button class="modal-close" onclick="closeModal('hotel-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="hotel-id">
+      <div class="form-grid form-grid-2">
+        <div class="form-group"><label>Hotel Name *</label><input id="h-name" placeholder="The Grand Hotel"></div>
+        <div class="form-group"><label>Star Rating</label>
+          <select id="h-stars">
+            <option value="">Unknown</option>
+            <option>⭐ 1 Star</option><option>⭐⭐ 2 Stars</option>
+            <option>⭐⭐⭐ 3 Stars</option><option>⭐⭐⭐⭐ 4 Stars</option>
+            <option>⭐⭐⭐⭐⭐ 5 Stars</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Address</label><input id="h-address" placeholder="123 Hotel Blvd, City, State"></div>
+        <div class="form-group"><label>Website</label><input id="h-web" type="url" placeholder="https://hotel.com"></div>
+        <div class="form-group"><label>Phone</label><input id="h-phone" placeholder="(555) 555-5555"></div>
+        <div class="form-group"><label>Nightly Rate (est.)</label><input id="h-rate" type="number" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="form-group"><label>Distance to Venue</label><input id="h-dist" placeholder="0.5 miles, 10 min drive…"></div>
+        <div class="form-group"><label>Block Available?</label>
+          <select id="h-block">
+            <option value="unknown">Unknown</option>
+            <option value="yes">Yes — Room Block</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Block Code</label><input id="h-code" placeholder="WEDDING2027"></div>
+        <div class="form-group"><label>Block Deadline</label><input id="h-deadline" type="date"></div>
+        <div class="form-group"><label>Recommended?</label>
+          <select id="h-rec">
+            <option value="no">No</option>
+            <option value="yes">Yes — Mark as Recommended</option>
+          </select>
+        </div>
+        <div class="form-group full"><label>Notes</label><textarea id="h-notes" placeholder="Shuttle availability, amenities, nearby restaurants…"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('hotel-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveHotel()">Save Hotel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+const state = {
+  guests: [],
+  vendors: [],
+  expenses: [],
+  gifts: [],
+  hotels: [],
+  categories: []
+};
+
+// ═══════════════════════════════════════════════════
+//  API
+// ═══════════════════════════════════════════════════
+const api = {
+  async get(store) {
+    const r = await fetch(`/api/${store}`);
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
+  async post(store, data) {
+    const r = await fetch(`/api/${store}`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
+  async put(store, id, data) {
+    const r = await fetch(`/api/${store}/${id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  },
+  async del(store, id) {
+    const r = await fetch(`/api/${store}/${id}`, { method: 'DELETE' });
+    if (!r.ok) throw new Error(await r.text());
+    return r.json();
+  }
+};
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+async function init() {
+  startCountdown();
+  await Promise.all([
+    loadStore('guests'),
+    loadStore('vendors'),
+    loadStore('expenses'),
+    loadStore('gifts'),
+    loadStore('hotels'),
+    loadStore('categories')
+  ]);
+  renderAll();
+}
+
+async function loadStore(name) {
+  try {
+    state[name] = await api.get(name);
+  } catch (e) {
+    state[name] = [];
+    console.warn(`Could not load ${name}:`, e.message);
+  }
+}
+
+function renderAll() {
+  renderGuests();
+  renderVendors();
+  renderExpenses();
+  renderGifts();
+  renderHotels();
+}
+
+// ═══════════════════════════════════════════════════
+//  COUNTDOWN
+// ═══════════════════════════════════════════════════
+function startCountdown() {
+  function update() {
+    const target = new Date('2027-07-24T00:00:00');
+    const now = new Date();
+    const diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<div class="cd-unit"><span class="cd-num" style="font-size:1.2rem;color:var(--blush)">Today is the Day! 🎉</span></div>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-days').textContent = d.toLocaleString();
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-seconds').textContent = String(s).padStart(2,'0');
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// ═══════════════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════════════
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════
+//  MODAL HELPERS
+// ═══════════════════════════════════════════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+let toastTimer;
+function toast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type === 'success' ? '✓ ' : '⚠ ') + msg;
+  t.style.background = type === 'success' ? 'var(--ink)' : '#c0392b';
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════════════
+//  FORMAT HELPERS
+// ═══════════════════════════════════════════════════
+const fmt$ = n => n != null && n !== '' ? '$' + parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—';
+const fmtDate = d => d ? new Date(d + 'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '—';
+
+// ═══════════════════════════════════════════════════
+//  GUESTS
+// ═══════════════════════════════════════════════════
+function renderGuests() {
+  const search = (document.getElementById('guest-search')?.value || '').toLowerCase();
+  const filterStatus = document.getElementById('guest-filter-status')?.value || '';
+  const filterSide = document.getElementById('guest-filter-side')?.value || '';
+
+  let guests = state.guests.filter(g => {
+    const name = `${g.firstName} ${g.lastName}`.toLowerCase();
+    const match = name.includes(search) || (g.email||'').toLowerCase().includes(search);
+    const statusOk = !filterStatus || g.rsvp === filterStatus;
+    const sideOk = !filterSide || g.side === filterSide;
+    return match && statusOk && sideOk;
+  });
+
+  const total = state.guests.length;
+  const attending = state.guests.filter(g => g.rsvp === 'attending').length;
+  const pending = state.guests.filter(g => g.rsvp === 'pending').length;
+
+  document.getElementById('guest-stats').innerHTML = `
+    <div class="stat-pill"><strong>${total}</strong> Total</div>
+    <div class="stat-pill"><strong>${attending}</strong> Attending</div>
+    <div class="stat-pill"><strong>${pending}</strong> Pending</div>
+  `;
+
+  const tbody = document.getElementById('guest-tbody');
+  if (!guests.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><span class="icon">💌</span><strong>No guests yet</strong><p>Add your first guest to get started</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = guests.map(g => {
+    const rsvpBadge = g.rsvp === 'attending' ? 'badge-green' : g.rsvp === 'not-attending' ? 'badge-red' : 'badge-muted';
+    const rsvpLabel = g.rsvp === 'attending' ? 'Attending' : g.rsvp === 'not-attending' ? 'Declined' : 'Pending';
+    const sideBadge = g.side === 'bride' ? 'badge-blue' : g.side === 'groom' ? 'badge-sage' : 'badge-muted';
+    return `<tr>
+      <td><strong>${g.firstName} ${g.lastName}</strong>${g.notes ? `<br><small style="color:var(--muted)">${g.notes}</small>` : ''}</td>
+      <td style="font-size:0.8rem;color:var(--mid)">${g.address || '—'}</td>
+      <td>${g.email ? `<a href="mailto:${g.email}">${g.email}</a>` : '—'}</td>
+      <td><span class="badge ${sideBadge}">${g.side || '—'}</span></td>
+      <td><span class="badge ${rsvpBadge}">${rsvpLabel}</span></td>
+      <td style="font-size:0.82rem">${g.meal || '—'}</td>
+      <td style="font-size:0.82rem">${g.plus1 === 'yes' ? (g.plus1Name || '✓') : '—'}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-ghost" onclick="editGuest('${g.id}')" title="Edit">✏️</button>
+        <button class="btn btn-danger" onclick="deleteRecord('guests','${g.id}', renderGuests)" title="Delete">✕</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterGuests(v) { renderGuests(); }
+
+function clearGuestForm() {
+  ['guest-id','g-first','g-last','g-address','g-email','g-phone','g-plus1-name','g-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('g-side').value = 'bride';
+  document.getElementById('g-rsvp').value = 'pending';
+  document.getElementById('g-meal').value = '';
+  document.getElementById('g-plus1').value = 'no';
+  document.getElementById('guest-modal-title').textContent = 'Add Guest';
+}
+
+function editGuest(id) {
+  const g = state.guests.find(x => x.id === id);
+  if (!g) return;
+  clearGuestForm();
+  document.getElementById('guest-id').value = g.id;
+  document.getElementById('g-first').value = g.firstName || '';
+  document.getElementById('g-last').value = g.lastName || '';
+  document.getElementById('g-address').value = g.address || '';
+  document.getElementById('g-email').value = g.email || '';
+  document.getElementById('g-phone').value = g.phone || '';
+  document.getElementById('g-side').value = g.side || 'bride';
+  document.getElementById('g-rsvp').value = g.rsvp || 'pending';
+  document.getElementById('g-meal').value = g.meal || '';
+  document.getElementById('g-plus1').value = g.plus1 || 'no';
+  document.getElementById('g-plus1-name').value = g.plus1Name || '';
+  document.getElementById('g-notes').value = g.notes || '';
+  document.getElementById('guest-modal-title').textContent = 'Edit Guest';
+  openModal('guest-modal');
+}
+
+async function saveGuest() {
+  const first = document.getElementById('g-first').value.trim();
+  const last = document.getElementById('g-last').value.trim();
+  if (!first || !last) { toast('Please enter a name', 'error'); return; }
+  const id = document.getElementById('guest-id').value;
+  const data = {
+    firstName: first, lastName: last,
+    address: document.getElementById('g-address').value.trim(),
+    email: document.getElementById('g-email').value.trim(),
+    phone: document.getElementById('g-phone').value.trim(),
+    side: document.getElementById('g-side').value,
+    rsvp: document.getElementById('g-rsvp').value,
+    meal: document.getElementById('g-meal').value,
+    plus1: document.getElementById('g-plus1').value,
+    plus1Name: document.getElementById('g-plus1-name').value.trim(),
+    notes: document.getElementById('g-notes').value.trim()
+  };
+  try {
+    if (id) {
+      const updated = await api.put('guests', id, data);
+      state.guests = state.guests.map(g => g.id === id ? updated : g);
+      toast('Guest updated');
+    } else {
+      const created = await api.post('guests', data);
+      state.guests.push(created);
+      toast('Guest added');
+    }
+    closeModal('guest-modal');
+    clearGuestForm();
+    renderGuests();
+  } catch (e) { toast('Error saving guest', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  VENDORS
+// ═══════════════════════════════════════════════════
+function renderVendors() {
+  const search = (document.getElementById('vendor-search')?.value || '').toLowerCase();
+  const filterCat = document.getElementById('vendor-filter-cat')?.value || '';
+  const filterStatus = document.getElementById('vendor-filter-status')?.value || '';
+
+  let vendors = state.vendors.filter(v => {
+    const match = (v.name||'').toLowerCase().includes(search) || (v.contact||'').toLowerCase().includes(search);
+    const catOk = !filterCat || v.category === filterCat;
+    const statusOk = !filterStatus || v.status === filterStatus;
+    return match && catOk && statusOk;
+  });
+
+  const booked = state.vendors.filter(v => v.status === 'booked').length;
+  const evaluating = state.vendors.filter(v => v.status === 'evaluating').length;
+
+  document.getElementById('vendor-stats').innerHTML = `
+    <div class="stat-pill"><strong>${booked}</strong> Booked</div>
+    <div class="stat-pill"><strong>${evaluating}</strong> Evaluating</div>
+  `;
+
+  const tbody = document.getElementById('vendor-tbody');
+  if (!vendors.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><span class="icon">🎪</span><strong>No vendors yet</strong><p>Start adding vendors you're considering</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = vendors.map(v => {
+    const statusBadge = v.status === 'booked' ? 'badge-green' : v.status === 'declined' ? 'badge-red' : 'badge-gold';
+    const statusLabel = v.status === 'booked' ? 'Booked' : v.status === 'declined' ? 'Declined' : 'Evaluating';
+    return `<tr>
+      <td><strong>${v.name}</strong>${v.contact ? `<br><small style="color:var(--muted)">${v.contact}</small>` : ''}</td>
+      <td><span class="badge badge-muted">${v.category}</span></td>
+      <td style="font-size:0.82rem">${v.email ? `<a href="mailto:${v.email}">${v.email}</a>` : ''}${v.phone ? `<br>${v.phone}` : ''}</td>
+      <td style="font-size:0.82rem">${v.website ? `<a href="${v.website}" target="_blank" rel="noopener">Visit ↗</a>` : '—'}</td>
+      <td style="font-family:'Cormorant Garamond',serif;font-size:1.1rem">${v.price ? fmt$(v.price) : '—'}</td>
+      <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
+      <td style="font-size:0.8rem;color:var(--mid);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${v.notes||''}">${v.notes || '—'}</td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-ghost" onclick="editVendor('${v.id}')" title="Edit">✏️</button>
+        <button class="btn btn-danger" onclick="deleteRecord('vendors','${v.id}', renderVendors)" title="Delete">✕</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterVendors(v) { renderVendors(); }
+
+function clearVendorForm() {
+  ['vendor-id','v-name','v-contact','v-email','v-phone','v-web','v-price','v-notes'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('v-cat').value = 'Venue';
+  document.getElementById('v-status').value = 'evaluating';
+  document.getElementById('vendor-modal-title').textContent = 'Add Vendor';
+}
+
+function editVendor(id) {
+  const v = state.vendors.find(x => x.id === id);
+  if (!v) return;
+  clearVendorForm();
+  document.getElementById('vendor-id').value = v.id;
+  document.getElementById('v-name').value = v.name || '';
+  document.getElementById('v-cat').value = v.category || 'Venue';
+  document.getElementById('v-contact').value = v.contact || '';
+  document.getElementById('v-email').value = v.email || '';
+  document.getElementById('v-phone').value = v.phone || '';
+  document.getElementById('v-web').value = v.website || '';
+  document.getElementById('v-price').value = v.price || '';
+  document.getElementById('v-status').value = v.status || 'evaluating';
+  document.getElementById('v-notes').value = v.notes || '';
+  document.getElementById('vendor-modal-title').textContent = 'Edit Vendor';
+  openModal('vendor-modal');
+}
+
+async function saveVendor() {
+  const name = document.getElementById('v-name').value.trim();
+  if (!name) { toast('Please enter a vendor name', 'error'); return; }
+  const id = document.getElementById('vendor-id').value;
+  const data = {
+    name, category: document.getElementById('v-cat').value,
+    contact: document.getElementById('v-contact').value.trim(),
+    email: document.getElementById('v-email').value.trim(),
+    phone: document.getElementById('v-phone').value.trim(),
+    website: document.getElementById('v-web').value.trim(),
+    price: document.getElementById('v-price').value,
+    status: document.getElementById('v-status').value,
+    notes: document.getElementById('v-notes').value.trim()
+  };
+  try {
+    if (id) {
+      const updated = await api.put('vendors', id, data);
+      state.vendors = state.vendors.map(v => v.id === id ? updated : v);
+      toast('Vendor updated');
+    } else {
+      const created = await api.post('vendors', data);
+      state.vendors.push(created);
+      toast('Vendor added');
+    }
+    closeModal('vendor-modal');
+    clearVendorForm();
+    renderVendors();
+    populateExpenseVendorSelect();
+  } catch (e) { toast('Error saving vendor', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  CATEGORIES
+// ═══════════════════════════════════════════════════
+const DEFAULT_CATS = ['Venue','Catering','Photography','Videography','Flowers','Music / DJ',
+  'Hair & Makeup','Cake / Desserts','Transportation','Officiant','Stationery','Rentals','Attire','Honeymoon','Other'];
+
+function getCats() {
+  if (!state.categories.length) {
+    return DEFAULT_CATS.map(n => ({ name: n, budget: '' }));
+  }
+  return state.categories;
+}
+
+function openCategoryModal() {
+  renderCategoryList();
+  openModal('category-modal');
+}
+
+function renderCategoryList() {
+  const cats = getCats();
+  document.getElementById('category-list').innerHTML = cats.map((c, i) => `
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+      <span style="flex:1;font-size:0.85rem">${c.name}</span>
+      <input type="number" placeholder="Budget $" value="${c.budget||''}" 
+             oninput="updateCatBudget(${i}, this.value)"
+             style="width:120px;padding:0.4rem 0.6rem;font-size:0.82rem;">
+      <button class="btn btn-danger" onclick="removeCat(${i})">✕</button>
+    </div>
+  `).join('');
+  populateExpenseCatSelect();
+}
+
+function updateCatBudget(i, val) {
+  const cats = getCats();
+  cats[i].budget = val;
+  state.categories = cats;
+}
+
+function removeCat(i) {
+  const cats = getCats();
+  cats.splice(i, 1);
+  state.categories = cats;
+  renderCategoryList();
+}
+
+async function addCategory() {
+  const name = document.getElementById('new-cat-name').value.trim();
+  if (!name) return;
+  const cats = getCats();
+  if (cats.find(c => c.name.toLowerCase() === name.toLowerCase())) { toast('Category already exists', 'error'); return; }
+  cats.push({ name, budget: '' });
+  state.categories = cats;
+  document.getElementById('new-cat-name').value = '';
+  renderCategoryList();
+}
+
+async function saveCategories() {
+  const cats = getCats();
+  // Save as a single blob entry
+  try {
+    // Clear old and re-save
+    const existing = await api.get('categories');
+    await Promise.all(existing.map(c => api.del('categories', c.id)));
+    const saved = await Promise.all(cats.map(c => api.post('categories', c)));
+    state.categories = saved;
+    toast('Categories saved');
+    populateExpenseCatSelect();
+    renderExpenses();
+  } catch (e) { toast('Error saving categories', 'error'); }
+}
+
+function populateExpenseCatSelect() {
+  const sel = document.getElementById('e-cat');
+  const filterSel = document.getElementById('exp-filter-cat');
+  const cats = getCats();
+  const opts = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  if (sel) sel.innerHTML = opts;
+  if (filterSel) filterSel.innerHTML = '<option value="">All Categories</option>' + opts;
+}
+
+function populateExpenseVendorSelect() {
+  const sel = document.getElementById('e-vendor');
+  if (!sel) return;
+  const booked = state.vendors.filter(v => v.status === 'booked');
+  sel.innerHTML = '<option value="">None</option>' + state.vendors.map(v =>
+    `<option value="${v.id}">${v.name} (${v.category})</option>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════
+//  EXPENSES
+// ═══════════════════════════════════════════════════
+function renderExpenses() {
+  populateExpenseCatSelect();
+  populateExpenseVendorSelect();
+  populateMonthFilter();
+
+  const filterMonth = document.getElementById('exp-filter-month')?.value || '';
+  const filterCat = document.getElementById('exp-filter-cat')?.value || '';
+  const filterStatus = document.getElementById('exp-filter-status')?.value || '';
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  let expenses = state.expenses.map(e => {
+    const due = e.dueDate ? new Date(e.dueDate + 'T00:00:00') : null;
+    let status = e.status || 'upcoming';
+    if (status === 'upcoming' && due && due < today) status = 'overdue';
+    return { ...e, _status: status, _due: due };
+  });
+
+  // Update summary
+  const totalBudget = getCats().reduce((s, c) => s + (parseFloat(c.budget) || 0), 0);
+  const totalCommitted = state.vendors.filter(v => v.status === 'booked').reduce((s, v) => s + (parseFloat(v.price) || 0), 0);
+  const totalPaid = state.expenses.filter(e => e.status === 'paid').reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
+  const totalDue = state.expenses.filter(e => e.status !== 'paid').reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
+  document.getElementById('exp-budget').textContent = fmt$(totalBudget);
+  document.getElementById('exp-committed').textContent = fmt$(totalCommitted);
+  document.getElementById('exp-paid').textContent = fmt$(totalPaid);
+  document.getElementById('exp-remaining').textContent = fmt$(totalDue);
+
+  // Filter
+  if (filterMonth) expenses = expenses.filter(e => {
+    if (!e.dueDate) return false;
+    const ym = e.dueDate.substring(0, 7);
+    return ym === filterMonth;
+  });
+  if (filterCat) expenses = expenses.filter(e => e.category === filterCat);
+  if (filterStatus) expenses = expenses.filter(e => e._status === filterStatus);
+
+  const container = document.getElementById('expense-list');
+  if (!expenses.length) {
+    container.innerHTML = `<div class="empty-state"><span class="icon">💰</span><strong>No payments yet</strong><p>Add deposit and payment due dates to track your spending</p></div>`;
+    return;
+  }
+
+  // Group by month
+  const groups = {};
+  expenses.forEach(e => {
+    const key = e.dueDate ? e.dueDate.substring(0, 7) : 'No Date';
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(e);
+  });
+  const sortedKeys = Object.keys(groups).sort();
+
+  container.innerHTML = sortedKeys.map(key => {
+    const items = groups[key];
+    const monthTotal = items.reduce((s, e) => s + (parseFloat(e.amount) || 0), 0);
+    const monthLabel = key === 'No Date' ? 'No Due Date' : new Date(key + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    return `
+      <div class="month-group">
+        <div class="month-label">
+          <span>${monthLabel}</span>
+          <span class="month-total">${fmt$(monthTotal)}</span>
+        </div>
+        <div class="card" style="border-radius:0 0 6px 6px;">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Description</th><th>Category</th><th>Vendor</th><th>Amount</th><th>Due</th><th>Status</th><th></th></tr></thead>
+              <tbody>
+                ${items.map(e => {
+                  const vendor = e.vendorId ? state.vendors.find(v => v.id === e.vendorId) : null;
+                  const statusBadge = e._status === 'paid' ? 'badge-green' : e._status === 'overdue' ? 'badge-red' : 'badge-gold';
+                  const statusLabel = e._status === 'paid' ? 'Paid' : e._status === 'overdue' ? 'Overdue' : 'Upcoming';
+                  return `<tr>
+                    <td><strong>${e.description}</strong>${e.notes ? `<br><small style="color:var(--muted)">${e.notes}</small>` : ''}</td>
+                    <td><span class="badge badge-muted">${e.category || '—'}</span></td>
+                    <td style="font-size:0.82rem;color:var(--mid)">${vendor ? vendor.name : '—'}</td>
+                    <td style="font-family:'Cormorant Garamond',serif;font-size:1.1rem">${fmt$(e.amount)}</td>
+                    <td style="font-size:0.82rem">${fmtDate(e.dueDate)}</td>
+                    <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
+                    <td style="white-space:nowrap">
+                      ${e._status !== 'paid' ? `<button class="btn btn-ghost btn-sm" onclick="markPaid('${e.id}')" title="Mark Paid" style="color:var(--deep-sage);font-size:0.7rem">✓ Paid</button>` : ''}
+                      <button class="btn btn-ghost" onclick="editExpense('${e.id}')" title="Edit">✏️</button>
+                      <button class="btn btn-danger" onclick="deleteRecord('expenses','${e.id}', renderExpenses)" title="Delete">✕</button>
+                    </td>
+                  </tr>`;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function populateMonthFilter() {
+  const sel = document.getElementById('exp-filter-month');
+  if (!sel) return;
+  const months = [...new Set(state.expenses.filter(e => e.dueDate).map(e => e.dueDate.substring(0, 7)))].sort();
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">All Months</option>' + months.map(m =>
+    `<option value="${m}" ${m === cur ? 'selected' : ''}>${new Date(m + '-01').toLocaleDateString('en-US', {month:'long', year:'numeric'})}</option>`
+  ).join('');
+}
+
+function clearExpenseForm() {
+  ['expense-id','e-desc','e-amount','e-due','e-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('e-status').value = 'upcoming';
+  document.getElementById('expense-modal-title').textContent = 'Add Payment';
+  populateExpenseCatSelect();
+  populateExpenseVendorSelect();
+}
+
+function editExpense(id) {
+  const e = state.expenses.find(x => x.id === id);
+  if (!e) return;
+  clearExpenseForm();
+  document.getElementById('expense-id').value = e.id;
+  document.getElementById('e-desc').value = e.description || '';
+  document.getElementById('e-cat').value = e.category || '';
+  document.getElementById('e-vendor').value = e.vendorId || '';
+  document.getElementById('e-amount').value = e.amount || '';
+  document.getElementById('e-due').value = e.dueDate || '';
+  document.getElementById('e-status').value = e.status || 'upcoming';
+  document.getElementById('e-notes').value = e.notes || '';
+  document.getElementById('expense-modal-title').textContent = 'Edit Payment';
+  openModal('expense-modal');
+}
+
+async function markPaid(id) {
+  try {
+    const e = state.expenses.find(x => x.id === id);
+    if (!e) return;
+    const updated = await api.put('expenses', id, { ...e, status: 'paid' });
+    state.expenses = state.expenses.map(x => x.id === id ? updated : x);
+    toast('Marked as paid');
+    renderExpenses();
+  } catch (err) { toast('Error updating', 'error'); }
+}
+
+async function saveExpense() {
+  const desc = document.getElementById('e-desc').value.trim();
+  const amount = document.getElementById('e-amount').value;
+  const due = document.getElementById('e-due').value;
+  if (!desc || !amount || !due) { toast('Description, amount and due date are required', 'error'); return; }
+  const id = document.getElementById('expense-id').value;
+  const data = {
+    description: desc,
+    category: document.getElementById('e-cat').value,
+    vendorId: document.getElementById('e-vendor').value,
+    amount, dueDate: due,
+    status: document.getElementById('e-status').value,
+    notes: document.getElementById('e-notes').value.trim()
+  };
+  try {
+    if (id) {
+      const updated = await api.put('expenses', id, data);
+      state.expenses = state.expenses.map(e => e.id === id ? updated : e);
+      toast('Payment updated');
+    } else {
+      const created = await api.post('expenses', data);
+      state.expenses.push(created);
+      toast('Payment added');
+    }
+    closeModal('expense-modal');
+    clearExpenseForm();
+    renderExpenses();
+  } catch (e) { toast('Error saving payment', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  GIFTS
+// ═══════════════════════════════════════════════════
+function renderGifts() {
+  const search = (document.getElementById('gift-search')?.value || '').toLowerCase();
+  const filterTY = document.getElementById('gift-filter-ty')?.value || '';
+
+  let gifts = state.gifts.filter(g => {
+    const match = (g.giver||'').toLowerCase().includes(search) || (g.description||'').toLowerCase().includes(search);
+    const tyOk = !filterTY || g.thankYou === filterTY;
+    return match && tyOk;
+  });
+
+  const total = state.gifts.length;
+  const tySent = state.gifts.filter(g => g.thankYou === 'sent').length;
+  const tyPending = total - tySent;
+  const totalValue = state.gifts.reduce((s, g) => s + (parseFloat(g.value) || 0), 0);
+
+  document.getElementById('gift-stats').innerHTML = `
+    <div class="stat-pill"><strong>${total}</strong> Gifts</div>
+    <div class="stat-pill"><strong>${tySent}</strong> Thank You Sent</div>
+    <div class="stat-pill"><strong>${tyPending}</strong> Pending</div>
+    ${totalValue > 0 ? `<div class="stat-pill"><strong>${fmt$(totalValue)}</strong> Total Value</div>` : ''}
+  `;
+
+  const tbody = document.getElementById('gift-tbody');
+  if (!gifts.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><span class="icon">🎁</span><strong>No gifts logged yet</strong><p>Track gifts as they arrive and send thank you notes</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = gifts.map(g => `<tr>
+    <td><strong>${g.giver}</strong></td>
+    <td>${g.description}</td>
+    <td style="font-family:'Cormorant Garamond',serif;font-size:1.1rem">${g.value ? fmt$(g.value) : '—'}</td>
+    <td style="font-size:0.82rem">${fmtDate(g.dateReceived)}</td>
+    <td>
+      <span class="badge ${g.thankYou === 'sent' ? 'badge-green' : 'badge-gold'}">${g.thankYou === 'sent' ? '✓ Sent' : 'Pending'}</span>
+      ${g.thankYouDate ? `<br><small style="color:var(--muted);font-size:0.7rem">${fmtDate(g.thankYouDate)}</small>` : ''}
+    </td>
+    <td style="font-size:0.8rem;color:var(--mid)">${g.notes || '—'}</td>
+    <td style="white-space:nowrap">
+      ${g.thankYou !== 'sent' ? `<button class="btn btn-ghost btn-sm" onclick="markThankYou('${g.id}')" style="color:var(--deep-sage);font-size:0.7rem">✓ TY Sent</button>` : ''}
+      <button class="btn btn-ghost" onclick="editGift('${g.id}')" title="Edit">✏️</button>
+      <button class="btn btn-danger" onclick="deleteRecord('gifts','${g.id}', renderGifts)" title="Delete">✕</button>
+    </td>
+  </tr>`).join('');
+}
+
+function filterGifts(v) { renderGifts(); }
+
+function clearGiftForm() {
+  ['gift-id','gi-giver','gi-desc','gi-value','gi-date','gi-ty-date','gi-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('gi-ty').value = 'pending';
+  document.getElementById('gift-modal-title').textContent = 'Add Gift';
+}
+
+function editGift(id) {
+  const g = state.gifts.find(x => x.id === id);
+  if (!g) return;
+  clearGiftForm();
+  document.getElementById('gift-id').value = g.id;
+  document.getElementById('gi-giver').value = g.giver || '';
+  document.getElementById('gi-desc').value = g.description || '';
+  document.getElementById('gi-value').value = g.value || '';
+  document.getElementById('gi-date').value = g.dateReceived || '';
+  document.getElementById('gi-ty').value = g.thankYou || 'pending';
+  document.getElementById('gi-ty-date').value = g.thankYouDate || '';
+  document.getElementById('gi-notes').value = g.notes || '';
+  document.getElementById('gift-modal-title').textContent = 'Edit Gift';
+  openModal('gift-modal');
+}
+
+async function markThankYou(id) {
+  try {
+    const g = state.gifts.find(x => x.id === id);
+    if (!g) return;
+    const updated = await api.put('gifts', id, { ...g, thankYou: 'sent', thankYouDate: new Date().toISOString().split('T')[0] });
+    state.gifts = state.gifts.map(x => x.id === id ? updated : x);
+    toast('Thank you marked as sent');
+    renderGifts();
+  } catch (err) { toast('Error updating', 'error'); }
+}
+
+async function saveGift() {
+  const giver = document.getElementById('gi-giver').value.trim();
+  const desc = document.getElementById('gi-desc').value.trim();
+  if (!giver || !desc) { toast('Giver and description are required', 'error'); return; }
+  const id = document.getElementById('gift-id').value;
+  const data = {
+    giver, description: desc,
+    value: document.getElementById('gi-value').value,
+    dateReceived: document.getElementById('gi-date').value,
+    thankYou: document.getElementById('gi-ty').value,
+    thankYouDate: document.getElementById('gi-ty-date').value,
+    notes: document.getElementById('gi-notes').value.trim()
+  };
+  try {
+    if (id) {
+      const updated = await api.put('gifts', id, data);
+      state.gifts = state.gifts.map(g => g.id === id ? updated : g);
+      toast('Gift updated');
+    } else {
+      const created = await api.post('gifts', data);
+      state.gifts.push(created);
+      toast('Gift added');
+    }
+    closeModal('gift-modal');
+    clearGiftForm();
+    renderGifts();
+  } catch (e) { toast('Error saving gift', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  HOTELS
+// ═══════════════════════════════════════════════════
+function renderHotels() {
+  const grid = document.getElementById('hotel-grid');
+  if (!state.hotels.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="icon">🏨</span><strong>No hotels added yet</strong><p>Add hotels you're considering recommending to guests</p></div>`;
+    return;
+  }
+  const sorted = [...state.hotels].sort((a, b) => (b.recommended === 'yes') - (a.recommended === 'yes'));
+  grid.innerHTML = sorted.map(h => `
+    <div class="hotel-card ${h.recommended === 'yes' ? 'recommended' : ''}">
+      <div class="hotel-name">${h.name}</div>
+      <div class="hotel-meta">
+        ${h.stars || ''}
+        ${h.address ? `<br>${h.address}` : ''}
+        ${h.distance ? `<br>📍 ${h.distance} from venue` : ''}
+      </div>
+      ${h.rate ? `<div class="hotel-rate">${fmt$(h.rate)}<small> / night</small></div>` : ''}
+      ${h.blockAvailable === 'yes' ? `<div style="margin-top:0.5rem"><span class="badge badge-sage">Room Block Available</span>${h.blockCode ? ` <code style="font-size:0.75rem;background:var(--warm-white);padding:0.15rem 0.4rem;border-radius:3px;">${h.blockCode}</code>` : ''}${h.blockDeadline ? `<br><small style="color:var(--muted);font-size:0.75rem">Deadline: ${fmtDate(h.blockDeadline)}</small>` : ''}</div>` : ''}
+      ${h.notes ? `<div class="hotel-notes">${h.notes}</div>` : ''}
+      <div class="hotel-actions">
+        ${h.website ? `<a href="${h.website}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Visit Site ↗</a>` : ''}
+        ${h.phone ? `<a href="tel:${h.phone}" class="btn btn-secondary btn-sm">📞 Call</a>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="editHotel('${h.id}')">✏️ Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteRecord('hotels','${h.id}', renderHotels)">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function clearHotelForm() {
+  ['hotel-id','h-name','h-address','h-web','h-phone','h-rate','h-dist','h-code','h-deadline','h-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('h-stars').value = '';
+  document.getElementById('h-block').value = 'unknown';
+  document.getElementById('h-rec').value = 'no';
+  document.getElementById('hotel-modal-title').textContent = 'Add Hotel';
+}
+
+function editHotel(id) {
+  const h = state.hotels.find(x => x.id === id);
+  if (!h) return;
+  clearHotelForm();
+  document.getElementById('hotel-id').value = h.id;
+  document.getElementById('h-name').value = h.name || '';
+  document.getElementById('h-stars').value = h.stars || '';
+  document.getElementById('h-address').value = h.address || '';
+  document.getElementById('h-web').value = h.website || '';
+  document.getElementById('h-phone').value = h.phone || '';
+  document.getElementById('h-rate').value = h.rate || '';
+  document.getElementById('h-dist').value = h.distance || '';
+  document.getElementById('h-block').value = h.blockAvailable || 'unknown';
+  document.getElementById('h-code').value = h.blockCode || '';
+  document.getElementById('h-deadline').value = h.blockDeadline || '';
+  document.getElementById('h-rec').value = h.recommended || 'no';
+  document.getElementById('h-notes').value = h.notes || '';
+  document.getElementById('hotel-modal-title').textContent = 'Edit Hotel';
+  openModal('hotel-modal');
+}
+
+async function saveHotel() {
+  const name = document.getElementById('h-name').value.trim();
+  if (!name) { toast('Please enter a hotel name', 'error'); return; }
+  const id = document.getElementById('hotel-id').value;
+  const data = {
+    name, stars: document.getElementById('h-stars').value,
+    address: document.getElementById('h-address').value.trim(),
+    website: document.getElementById('h-web').value.trim(),
+    phone: document.getElementById('h-phone').value.trim(),
+    rate: document.getElementById('h-rate').value,
+    distance: document.getElementById('h-dist').value.trim(),
+    blockAvailable: document.getElementById('h-block').value,
+    blockCode: document.getElementById('h-code').value.trim(),
+    blockDeadline: document.getElementById('h-deadline').value,
+    recommended: document.getElementById('h-rec').value,
+    notes: document.getElementById('h-notes').value.trim()
+  };
+  try {
+    if (id) {
+      const updated = await api.put('hotels', id, data);
+      state.hotels = state.hotels.map(h => h.id === id ? updated : h);
+      toast('Hotel updated');
+    } else {
+      const created = await api.post('hotels', data);
+      state.hotels.push(created);
+      toast('Hotel added');
+    }
+    closeModal('hotel-modal');
+    clearHotelForm();
+    renderHotels();
+  } catch (e) { toast('Error saving hotel', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  SHARED DELETE
+// ═══════════════════════════════════════════════════
+async function deleteRecord(store, id, rerender) {
+  if (!confirm('Are you sure you want to delete this? This cannot be undone.')) return;
+  try {
+    await api.del(store, id);
+    state[store] = state[store].filter(x => x.id !== id);
+    toast('Deleted successfully');
+    rerender();
+  } catch (e) { toast('Error deleting', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
