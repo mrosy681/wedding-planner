@@ -511,12 +511,41 @@ textarea { resize: vertical; min-height: 80px; }
 }
 .month-total { color: var(--ink); font-weight: 600; }
 
-/* ── RESP ── */
-@media (max-width: 680px) {
-  main { padding: 1.5rem 1rem 3rem; }
-  .section-header { flex-direction: column; align-items: flex-start; }
-  .hotel-grid { grid-template-columns: 1fr; }
+/* ── DOCUMENTS ── */
+.doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1rem; }
+.doc-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+  padding: 1rem 1.1rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.5rem;
+  transition: box-shadow 0.2s;
 }
+.doc-card:hover { box-shadow: var(--shadow-lg); }
+.doc-icon { font-size: 2rem; line-height: 1; }
+.doc-name { font-weight: 500; font-size: 0.88rem; word-break: break-word; }
+.doc-meta { font-size: 0.75rem; color: var(--muted); }
+.doc-tag  { font-size: 0.68rem; background: var(--warm); border: 1px solid var(--border);
+             border-radius: 100px; padding: 0.15rem 0.55rem; color: var(--mid); display: inline-block; }
+.doc-actions { display: flex; gap: 0.4rem; margin-top: auto; padding-top: 0.5rem; }
+.doc-section-heading {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400;
+  color: var(--mid); margin: 1.5rem 0 0.75rem; padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+/* vendor doc pill in table */
+.doc-pill {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: var(--warm); border: 1px solid var(--border); border-radius: 100px;
+  padding: 0.18rem 0.6rem; font-size: 0.68rem; color: var(--mid); cursor: pointer;
+  transition: background 0.15s;
+}
+.doc-pill:hover { background: var(--blush); border-color: var(--blush); }
+/* upload drop zone */
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: 6px; padding: 1.5rem;
+  text-align: center; color: var(--muted); font-size: 0.85rem; cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.drop-zone:hover, .drop-zone.drag-over { border-color: var(--gold); background: rgba(196,160,94,0.05); }
+</style>
 
 /* ── TOOLTIP ── */
 [title] { cursor: help; }
@@ -546,6 +575,7 @@ a:hover { text-decoration: underline; }
   <button class="nav-btn" onclick="showSection('expenses', this)"><span class="nav-icon">💰</span>Expenses</button>
   <button class="nav-btn" onclick="showSection('gifts', this)"><span class="nav-icon">🎁</span>Gifts</button>
   <button class="nav-btn" onclick="showSection('hotels', this)"><span class="nav-icon">🏨</span>Hotels</button>
+  <button class="nav-btn" onclick="showSection('documents', this)"><span class="nav-icon">📁</span>Documents</button>
 </nav>
 
 <main>
@@ -782,6 +812,32 @@ a:hover { text-decoration: underline; }
   <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;">Track hotels you're considering recommending to your guests. Mark your top pick as Recommended.</p>
   <div class="hotel-grid" id="hotel-grid">
     <div class="loading"><div class="spinner"></div><br>Loading hotels…</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DOCUMENTS
+══════════════════════════════════════════════ -->
+<div class="section" id="section-documents">
+  <div class="section-header">
+    <div class="section-title">
+      <small>Section 06</small>
+      Documents
+    </div>
+    <button class="btn btn-primary" onclick="openUploadModal('general', null, null)">+ Upload Document</button>
+  </div>
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:2rem;">
+    Store contracts, quotes, inspiration, and any other files here. Documents can also be attached directly to vendors.
+    Supported: PDF, Word, Excel, images, and text files up to 4 MB each.
+  </p>
+
+  <!-- Vendor docs grouped -->
+  <div id="docs-vendor-groups"></div>
+
+  <!-- General docs -->
+  <div class="doc-section-heading" id="docs-general-heading" style="display:none">General Documents</div>
+  <div class="doc-grid" id="docs-general-grid">
+    <div class="loading"><div class="spinner"></div></div>
   </div>
 </div>
 
@@ -1136,6 +1192,56 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
+<!-- ── Document Upload Modal ── -->
+<div class="modal-overlay" id="doc-upload-modal">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <h2 class="modal-title" id="doc-modal-title">Documents</h2>
+      <button class="modal-close" onclick="closeModal('doc-upload-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Existing docs list -->
+      <div id="doc-existing-list" style="margin-bottom:1.25rem;"></div>
+      <!-- Upload zone -->
+      <div class="drop-zone" id="doc-drop-zone"
+           onclick="document.getElementById('doc-file-input').click()"
+           ondragover="e=>{ e.preventDefault(); this.classList.add('drag-over'); }"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleDocDrop(event)">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">📎</div>
+        <strong>Click to upload</strong> or drag &amp; drop a file here<br>
+        <span style="font-size:0.78rem;">PDF, Word, Excel, images, text — max 4 MB</span>
+      </div>
+      <input type="file" id="doc-file-input" style="display:none"
+             accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.png,.jpg,.jpeg,.gif,.webp"
+             onchange="handleDocFileSelect(this)">
+      <div id="doc-upload-progress" style="margin-top:0.75rem;display:none;">
+        <div style="font-size:0.82rem;color:var(--mid);margin-bottom:0.4rem;" id="doc-upload-status">Uploading…</div>
+        <div class="progress-bar"><div class="progress-fill" id="doc-upload-bar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('doc-upload-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Document Viewer Modal ── -->
+<div class="modal-overlay" id="doc-view-modal">
+  <div class="modal" style="max-width:700px;">
+    <div class="modal-header">
+      <h2 class="modal-title" id="doc-view-title">View Document</h2>
+      <button class="modal-close" onclick="closeModal('doc-view-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="doc-view-body" style="padding:0;min-height:300px;">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('doc-view-modal')">Close</button>
+      <button class="btn btn-primary" id="doc-download-btn">⬇ Download</button>
+    </div>
+  </div>
+</div>
+
 <!-- Import Result Modal -->
 <div class="modal-overlay" id="import-modal">
   <div class="modal" style="max-width:520px;">
@@ -1257,6 +1363,8 @@ function showSection(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');
   btn.classList.add('active');
+  if (name === 'expenses') { rE && rE(); populateExpenseCatSelect && populateExpenseCatSelect(); }
+  if (name === 'documents') renderDocuments();
 }
 
 // ═══════════════════════════════════════════════════
@@ -1639,6 +1747,7 @@ function renderVendors() {
       <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
       <td style="font-size:0.8rem;color:var(--mid);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${v.notes||''}">${v.notes || '—'}</td>
       <td style="white-space:nowrap">
+        <button class="doc-pill" onclick="openUploadModal('vendors', '${v.id}', '${v.name.replace(/'/g,"\\'")}')">📎 Docs${v.docCount ? ` (${v.docCount})` : ''}</button>
         <button class="btn btn-ghost" onclick="editVendor('${v.id}')" title="Edit">✏️</button>
         <button class="btn btn-danger" onclick="deleteRecord('vendors','${v.id}', renderVendors)" title="Delete">✕</button>
       </td>
@@ -2338,6 +2447,253 @@ function handleImport(input) {
     }
   };
   reader.readAsArrayBuffer(file);
+}
+
+// ═══════════════════════════════════════════════════
+//  DOCUMENTS
+// ═══════════════════════════════════════════════════
+const docState = {
+  context: null,   // { store: 'vendors'|'general', recordId, recordName }
+  generalDocs: [],
+  vendorDocs: {},  // vendorId → [doc meta]
+};
+
+const DOC_ICONS = {
+  'application/pdf':                                                    '📄',
+  'application/msword':                                                 '📝',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '📝',
+  'application/vnd.ms-excel':                                          '📊',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': '📊',
+  'image/png': '🖼', 'image/jpeg': '🖼', 'image/gif': '🖼', 'image/webp': '🖼',
+  'text/plain': '📃',
+};
+const docIcon  = mime => DOC_ICONS[mime] || '📎';
+const fmtSize  = b => b < 1024 ? b + ' B' : b < 1048576 ? (b/1024).toFixed(1) + ' KB' : (b/1048576).toFixed(1) + ' MB';
+const fmtDocDate = iso => iso ? new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+
+// ── doc API helpers ──────────────────────────────
+const docApi = {
+  async list(store, recordId) {
+    const r = await fetch(`/api/${store}/${recordId}/docs`);
+    return r.ok ? r.json() : [];
+  },
+  async listGeneral() {
+    const r = await fetch(`/api/docs`);
+    return r.ok ? r.json() : [];
+  },
+  async upload(store, recordId, docData) {
+    const url = store === 'general' ? '/api/docs' : `/api/${store}/${recordId}/docs`;
+    const r   = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(docData) });
+    return r.ok ? r.json() : null;
+  },
+  async download(store, recordId, docId) {
+    const url = store === 'general' ? `/api/docs/${docId}` : `/api/${store}/${recordId}/docs/${docId}`;
+    const r   = await fetch(url);
+    return r.ok ? r.json() : null;
+  },
+  async remove(store, recordId, docId) {
+    const url = store === 'general' ? `/api/docs/${docId}` : `/api/${store}/${recordId}/docs/${docId}`;
+    const r   = await fetch(url, { method:'DELETE' });
+    return r.ok;
+  },
+};
+
+// ── Open upload modal ────────────────────────────
+async function openUploadModal(store, recordId, recordName) {
+  docState.context = { store, recordId, recordName };
+  document.getElementById('doc-modal-title').textContent =
+    store === 'general' ? 'General Documents' : `📎 ${recordName} — Documents`;
+  document.getElementById('doc-upload-progress').style.display = 'none';
+  await refreshDocList();
+  openModal('doc-upload-modal');
+}
+
+async function refreshDocList() {
+  const { store, recordId } = docState.context;
+  const docs = store === 'general'
+    ? await docApi.listGeneral()
+    : await docApi.list(store, recordId);
+
+  // Update vendor doc count in state
+  if (store === 'vendors' && recordId) {
+    docState.vendorDocs[recordId] = docs;
+    const vendor = state.vendors.find(v => v.id === recordId);
+    if (vendor) { vendor.docCount = docs.length; renderVendors(); }
+  }
+  if (store === 'general') docState.generalDocs = docs;
+
+  const listEl = document.getElementById('doc-existing-list');
+  if (!docs.length) {
+    listEl.innerHTML = `<p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.5rem;">No documents uploaded yet.</p>`;
+    return;
+  }
+  listEl.innerHTML = docs.map(d => `
+    <div style="display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:1.4rem;">${docIcon(d.mimeType)}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:0.85rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${d.name}</div>
+        <div style="font-size:0.72rem;color:var(--muted);">${fmtSize(d.size)} · ${fmtDocDate(d.createdAt)}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="viewDoc('${store}','${recordId}','${d.id}','${d.name.replace(/'/g,"\\'")}','${d.mimeType}')" title="View / Download">👁</button>
+      <button class="btn btn-danger" onclick="deleteDoc('${store}','${recordId}','${d.id}')" title="Delete">✕</button>
+    </div>
+  `).join('');
+}
+
+// ── File selection / drag-drop ───────────────────
+function handleDocDrop(e) {
+  e.preventDefault();
+  document.getElementById('doc-drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) uploadDoc(file);
+}
+function handleDocFileSelect(input) {
+  const file = input.files[0];
+  input.value = '';
+  if (file) uploadDoc(file);
+}
+
+async function uploadDoc(file) {
+  const MAX = 4 * 1024 * 1024;
+  if (file.size > MAX) { toast('File too large — max 4 MB', 'error'); return; }
+
+  const progressEl = document.getElementById('doc-upload-progress');
+  const statusEl   = document.getElementById('doc-upload-status');
+  const barEl      = document.getElementById('doc-upload-bar');
+  progressEl.style.display = 'block';
+  statusEl.textContent = 'Reading file…';
+  barEl.style.width = '20%';
+
+  // Read as base64
+  const b64 = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload  = e => res(e.target.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+
+  statusEl.textContent = 'Uploading…';
+  barEl.style.width = '60%';
+
+  const { store, recordId } = docState.context;
+  const docData = { name: file.name, mimeType: file.type || 'application/octet-stream', size: file.size, data: b64 };
+
+  try {
+    await docApi.upload(store, recordId, docData);
+    barEl.style.width = '100%';
+    statusEl.textContent = 'Upload complete ✓';
+    setTimeout(() => { progressEl.style.display = 'none'; }, 1200);
+    toast('Document uploaded');
+    await refreshDocList();
+    // Also refresh documents section if open
+    if (document.getElementById('section-documents').classList.contains('active')) renderDocuments();
+  } catch (err) {
+    toast('Upload failed: ' + err.message, 'error');
+    progressEl.style.display = 'none';
+  }
+}
+
+// ── View / download ──────────────────────────────
+async function viewDoc(store, recordId, docId, name, mime) {
+  document.getElementById('doc-view-title').textContent = name;
+  document.getElementById('doc-view-body').innerHTML = `<div class="loading" style="padding:3rem"><div class="spinner"></div></div>`;
+  openModal('doc-view-modal');
+
+  const doc = await docApi.download(store, recordId, docId);
+  if (!doc || !doc.data) {
+    document.getElementById('doc-view-body').innerHTML = `<p style="padding:2rem;color:var(--muted)">Could not load document.</p>`;
+    return;
+  }
+
+  const dataUrl = `data:${doc.mimeType};base64,${doc.data}`;
+
+  // Set up download button
+  document.getElementById('doc-download-btn').onclick = () => {
+    const a = Object.assign(document.createElement('a'), { href: dataUrl, download: doc.name });
+    a.click();
+  };
+
+  // Preview
+  let preview = '';
+  if (doc.mimeType === 'application/pdf') {
+    preview = `<iframe src="${dataUrl}" style="width:100%;height:520px;border:none;border-radius:0 0 8px 8px;"></iframe>`;
+  } else if (doc.mimeType.startsWith('image/')) {
+    preview = `<div style="padding:1rem;text-align:center;"><img src="${dataUrl}" style="max-width:100%;max-height:500px;border-radius:4px;box-shadow:var(--shadow-lg)"></div>`;
+  } else if (doc.mimeType === 'text/plain') {
+    const text = atob(doc.data);
+    preview = `<pre style="padding:1.25rem;font-family:'Courier New',monospace;font-size:0.82rem;white-space:pre-wrap;max-height:480px;overflow-y:auto;">${text.replace(/</g,'&lt;')}</pre>`;
+  } else {
+    preview = `<div style="padding:3rem;text-align:center;color:var(--muted)">
+      <div style="font-size:3rem;margin-bottom:1rem;">${docIcon(doc.mimeType)}</div>
+      <p style="font-size:0.9rem;">Preview not available for this file type.</p>
+      <p style="font-size:0.82rem;margin-top:0.5rem;">Use the Download button below to open it.</p>
+    </div>`;
+  }
+  document.getElementById('doc-view-body').innerHTML = preview;
+}
+
+// ── Delete doc ───────────────────────────────────
+async function deleteDoc(store, recordId, docId) {
+  if (!confirm('Delete this document? This cannot be undone.')) return;
+  await docApi.remove(store, recordId, docId);
+  toast('Document deleted');
+  await refreshDocList();
+  if (document.getElementById('section-documents').classList.contains('active')) renderDocuments();
+}
+
+// ── Documents section render ─────────────────────
+async function renderDocuments() {
+  // Load general docs
+  const genDocs = await docApi.listGeneral();
+  docState.generalDocs = genDocs;
+
+  // Load docs for each booked/evaluating vendor
+  const vendorGroups = [];
+  for (const v of state.vendors) {
+    const docs = await docApi.list('vendors', v.id);
+    docState.vendorDocs[v.id] = docs;
+    if (docs.length) vendorGroups.push({ vendor: v, docs });
+  }
+
+  // Render vendor groups
+  const vgEl = document.getElementById('docs-vendor-groups');
+  if (vendorGroups.length) {
+    vgEl.innerHTML = vendorGroups.map(({ vendor, docs }) => `
+      <div class="doc-section-heading" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>🎪 ${vendor.name}</span>
+        <button class="btn btn-secondary btn-sm" onclick="openUploadModal('vendors','${vendor.id}','${vendor.name.replace(/'/g,"\\'")}')">+ Add Doc</button>
+      </div>
+      <div class="doc-grid" style="margin-bottom:1rem;">
+        ${docs.map(d => docCard(d, 'vendors', vendor.id)).join('')}
+      </div>
+    `).join('');
+  } else {
+    vgEl.innerHTML = `<p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;">No vendor documents yet — click 📎 Docs on any vendor to attach files.</p>`;
+  }
+
+  // Render general docs
+  const genHeading = document.getElementById('docs-general-heading');
+  const genGrid    = document.getElementById('docs-general-grid');
+  if (genDocs.length) {
+    genHeading.style.display = '';
+    genGrid.innerHTML = genDocs.map(d => docCard(d, 'general', null)).join('');
+  } else {
+    genHeading.style.display = 'none';
+    genGrid.innerHTML = `<p style="font-size:0.85rem;color:var(--muted);">No general documents yet.</p>`;
+  }
+}
+
+function docCard(d, store, recordId) {
+  return `
+    <div class="doc-card">
+      <div class="doc-icon">${docIcon(d.mimeType)}</div>
+      <div class="doc-name">${d.name}</div>
+      <div class="doc-meta">${fmtSize(d.size)} · ${fmtDocDate(d.createdAt)}</div>
+      <div class="doc-actions">
+        <button class="btn btn-secondary btn-sm" onclick="viewDoc('${store}','${recordId}','${d.id}','${d.name.replace(/'/g,"\\'")}','${d.mimeType}')">👁 View</button>
+        <button class="btn btn-danger" onclick="deleteDoc('${store}','${recordId}','${d.id}')">✕</button>
+      </div>
+    </div>`;
 }
 
 // ═══════════════════════════════════════════════════
