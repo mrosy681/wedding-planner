@@ -561,6 +561,8 @@ a:hover { text-decoration: underline; }
     </div>
     <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
       <div class="section-stats" id="guest-stats"></div>
+      <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">⬆ Import Excel</button>
+      <input type="file" id="import-file-input" accept=".xlsx" style="display:none" onchange="handleImport(this)">
       <button class="btn btn-primary" onclick="openModal('guest-modal')">+ Add Guest</button>
     </div>
   </div>
@@ -1134,6 +1136,22 @@ a:hover { text-decoration: underline; }
   </div>
 </div>
 
+<!-- Import Result Modal -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <h2 class="modal-title">Import Results</h2>
+      <button class="modal-close" onclick="closeModal('import-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="import-modal-body">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeModal('import-modal')">Done</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
 //  STATE
@@ -2165,6 +2183,161 @@ async function deleteRecord(store, id, rerender) {
     toast('Deleted successfully');
     rerender();
   } catch (e) { toast('Error deleting', 'error'); }
+}
+
+// ═══════════════════════════════════════════════════
+//  EXCEL IMPORT
+// ═══════════════════════════════════════════════════
+const RELATION_MAP = {
+  'family-kw':'family-kw','family-mr':'family-mr','friends':'friends',
+  'work-mr':'work-mr','work-kw':'work-kw',
+  // friendly aliases
+  'family kw':'family-kw','family mr':'family-mr',
+  'work mr':'work-mr','work kw':'work-kw',
+};
+const MEAL_VALS  = ['chicken','beef','fish','vegetarian','vegan'];
+const RSVP_VALS  = ['pending','attending','not-attending','not attending'];
+const norml = s => (s || '').toString().trim().toLowerCase();
+const yn    = s => norml(s) === 'yes' ? true : false;
+
+function handleImport(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = ''; // reset so same file can be re-imported
+
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const wb   = XLSX.read(e.target.result, { type: 'array' });
+      const ws   = wb.Sheets['Guest Import'];
+      if (!ws) { toast('Sheet "Guest Import" not found in file', 'error'); return; }
+
+      // Row 4 has the column keys (0-indexed after sheet_to_json with header:3 skips 3 rows)
+      const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      // Find header row (row index 3 = Excel row 4)
+      const keyRow = rows[3];
+      if (!keyRow || !keyRow.includes('guest_type')) {
+        toast('Template format not recognised — make sure you use the provided template.', 'error');
+        return;
+      }
+
+      // Build column-key → index map
+      const keyMap = {};
+      keyRow.forEach((k, i) => { if (k) keyMap[k.toString().trim()] = i; });
+
+      const get = (row, key) => (row[keyMap[key]] || '').toString().trim();
+
+      let added = 0, skipped = 0, errors = [];
+
+      // Data starts at Excel row 6 → array index 5
+      for (let ri = 5; ri < rows.length; ri++) {
+        const row = rows[ri];
+        // Skip blank rows
+        if (row.every(c => !c || c.toString().trim() === '')) continue;
+
+        const type = norml(get(row, 'guest_type'));
+        if (type !== 'individual' && type !== 'couple') {
+          errors.push(`Row ${ri+1}: guest_type must be "individual" or "couple" (got "${get(row,'guest_type')}")`);
+          skipped++; continue;
+        }
+
+        // Validate required name fields
+        if (type === 'individual') {
+          if (!get(row,'first_name') || !get(row,'last_name')) {
+            errors.push(`Row ${ri+1}: individual missing first_name or last_name`);
+            skipped++; continue;
+          }
+        } else {
+          if (!get(row,'p1_first_name') || !get(row,'p1_last_name') || !get(row,'p2_first_name')) {
+            errors.push(`Row ${ri+1}: couple missing partner names`);
+            skipped++; continue;
+          }
+        }
+
+        // Relation
+        const rawRel = norml(get(row, 'relation'));
+        const relation = RELATION_MAP[rawRel] || rawRel || 'friends';
+
+        // Meal normalise (capitalise first letter)
+        const normMeal = v => { const n = norml(v); return n ? (n.charAt(0).toUpperCase() + n.slice(1)) : ''; };
+
+        // RSVP normalise
+        const normRsvp = v => { const n = norml(v); return n === 'not attending' ? 'not-attending' : (RSVP_VALS.includes(n) ? n : 'pending'); };
+
+        const data = {
+          type,
+          firstName:   get(row, 'first_name'),
+          lastName:    get(row, 'last_name'),
+          p1firstName: get(row, 'p1_first_name'),
+          p1lastName:  get(row, 'p1_last_name'),
+          p1attending: yn(get(row, 'p1_attending')),
+          p2firstName: get(row, 'p2_first_name'),
+          p2lastName:  get(row, 'p2_last_name'),
+          p2attending: yn(get(row, 'p2_attending')),
+          street:      get(row, 'street'),
+          city:        get(row, 'city'),
+          state:       get(row, 'state').toUpperCase(),
+          zip:         get(row, 'zip'),
+          email:       get(row, 'email'),
+          phone:       get(row, 'phone'),
+          emailP1:     get(row, 'email_p1'),
+          phoneP1:     get(row, 'phone_p1'),
+          emailP2:     get(row, 'email_p2'),
+          phoneP2:     get(row, 'phone_p2'),
+          side:        relation,
+          location:    norml(get(row, 'location')) || 'unknown',
+          rsvp:        normRsvp(get(row, 'rsvp')),
+          tableNumber: get(row, 'table_number'),
+          meal:        normMeal(get(row, 'meal')),
+          mealP1:      normMeal(get(row, 'meal_p1')),
+          mealP2:      normMeal(get(row, 'meal_p2')),
+          plus1:       norml(get(row, 'plus1')) === 'yes' ? 'yes' : 'no',
+          plus1Name:   get(row, 'plus1_name'),
+          rehearsalInvited: norml(get(row, 'rehearsal_invited')) === 'yes' ? 'yes' : 'no',
+          rehearsalRsvp:    normRsvp(get(row, 'rehearsal_rsvp')),
+          notes:       get(row, 'notes'),
+        };
+
+        try {
+          const created = await api.post('guests', data);
+          state.guests.push(created);
+          added++;
+        } catch (err) {
+          errors.push(`Row ${ri+1}: API error — ${err.message}`);
+          skipped++;
+        }
+      }
+
+      renderGuests();
+
+      // Show results modal
+      const bodyEl = document.getElementById('import-modal-body');
+      bodyEl.innerHTML = `
+        <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <div style="flex:1;background:var(--warm);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--deep-sage)">${added}</div>
+            <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">Guests Imported</div>
+          </div>
+          <div style="flex:1;background:var(--warm);border:1px solid var(--border);border-radius:6px;padding:1rem 1.25rem;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;color:${skipped>0?'#c0392b':'var(--muted)'}">${skipped}</div>
+            <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted)">Rows Skipped</div>
+          </div>
+        </div>
+        ${errors.length ? `
+          <div style="background:#fde8e6;border:1px solid #f5c6c0;border-radius:4px;padding:0.75rem 1rem;font-size:0.8rem;color:#6b1c1c;">
+            <strong style="display:block;margin-bottom:0.4rem">Issues found:</strong>
+            <ul style="margin:0;padding-left:1.2rem;line-height:1.8">
+              ${errors.map(e => `<li>${e}</li>`).join('')}
+            </ul>
+          </div>` : `<p style="font-size:0.88rem;color:var(--deep-sage)">✓ All rows imported successfully.</p>`}
+      `;
+      openModal('import-modal');
+
+    } catch (err) {
+      toast('Failed to read file: ' + err.message, 'error');
+    }
+  };
+  reader.readAsArrayBuffer(file);
 }
 
 // ═══════════════════════════════════════════════════
